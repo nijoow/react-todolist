@@ -27,7 +27,7 @@ export class AppController {
     const { accessToken, refreshToken, ...options } =
       await this.authService.login(req.user);
 
-    this.usersService.setCurrentRefreshToken(refreshToken, req.user.username);
+    this.usersService.setCurrentRefreshToken(refreshToken, req.user.id);
     res.cookie('Refresh', refreshToken, options);
     return { accessToken };
   }
@@ -44,5 +44,25 @@ export class AppController {
     const user = req.user;
     const accessToken = this.authService.getNewAccessToken(user);
     return { accessToken };
+  }
+
+  @Get('init')
+  async init() {
+    const users = await this.usersService.findAll();
+    if (users.length) {
+      return { message: '이미 초기화되어있습니다.' };
+    }
+    this.usersService.create({
+      id: 1,
+      username: 'bmeks',
+      password: '1234',
+      refreshToken: null,
+    });
+    this.usersService.create({
+      id: 2,
+      username: 'daydreamlab',
+      password: '1234',
+      refreshToken: null,
+    });
   }
 }

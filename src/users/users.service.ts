@@ -1,44 +1,60 @@
+import { Model } from 'mongoose';
 import { Injectable, Logger } from '@nestjs/common';
-
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from '../schemas/users.schema';
 // This should be a real class/interface representing a user entity
-export type User = any;
 
 @Injectable()
 export class UsersService {
-  private users = [
-    {
-      userId: 1,
-      username: 'bmeks',
-      password: 'bmeks1@',
-      refreshToken: null,
-    },
-    {
-      userId: 2,
-      username: 'daydreamlab',
-      password: '1!epdlemfla',
-      refreshToken: null,
-    },
-  ];
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async create(createUserDto: User): Promise<User> {
+    const createdCat = new this.userModel(createUserDto);
+    return createdCat.save();
   }
 
-  async getUserIfRefreshTokenMatches(refreshToken: string, username: string) {
-    const idx = this.users.findIndex(
-      ({ username: _userName }) => _userName === username,
-    );
-    const isRefreshTokenMatching =
-      this.users[idx].refreshToken === refreshToken;
+  async findAll(): Promise<User[]> {
+    return this.userModel.find().exec();
+  }
+
+  async login(username: string, password: string): Promise<User | undefined> {
+    const user: User = await this.userModel
+      .where({ username, password })
+      .findOne()
+      .exec();
+    return user;
+  }
+
+  async findByUserName(username: string): Promise<User | undefined> {
+    const user: User = await this.userModel
+      .where({ username })
+      .findOne()
+      .exec();
+    return {
+      id: user.id,
+      username: user.username,
+      refreshToken: user.refreshToken,
+      password: user.password,
+    };
+  }
+
+  async findById(id: number): Promise<User | undefined> {
+    const user: User = await this.userModel.where({ id }).findOne().exec();
+    return user;
+  }
+
+  async findByRefreshToken(refreshToken: string, id: number) {
+    const user = await this.findById(id);
+    if (!user) {
+      return { message: 'Login Error (refreshToken)' };
+    }
+    const isRefreshTokenMatching = user.refreshToken === refreshToken;
 
     if (isRefreshTokenMatching) {
-      return this.users[idx];
+      return user;
     }
   }
-  async setCurrentRefreshToken(refreshToken: string, username: string) {
-    const idx = this.users.findIndex(
-      ({ username: _userName }) => _userName === username,
-    );
-    this.users[idx].refreshToken = refreshToken;
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    await this.userModel.where({ id }).updateOne({ refreshToken });
   }
 }
