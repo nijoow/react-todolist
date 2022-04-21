@@ -19,6 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
+    
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -32,6 +33,7 @@
     "@types/hapi__joi": "^17.1.8",
     "cookie-parse": "^0.4.0",
     "cookie-parser": "^1.4.6",
+    "create-react-app": "^5.0.1",
     "mongoose": "^6.2.10",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",

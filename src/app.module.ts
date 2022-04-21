@@ -9,7 +9,7 @@ import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot('mongoURI'),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
