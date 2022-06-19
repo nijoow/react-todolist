@@ -16,7 +16,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="flex">
       <Router>
         <NavBar />
         <Routes>

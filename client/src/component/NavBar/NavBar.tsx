@@ -13,59 +13,75 @@ function NavBar() {
     localStorage.setItem('accessToken', '');
   };
   return (
-    <div className="absolute top-0 w-full left-0 bg-slate-900 text-white py-5 font-bold">
-      <div className="flex items-center w-4/5 m-auto ">
+    <div className="top-0 w-1/6 h-screen left-0 bg-slate-800 text-white py-5 font-bold">
+      <div className="flex-row items-center m-auto ">
         <Link to="/">
-          <div className="flex-[1_1_0] px-20 text-xl">Todo List</div>
+          <div className="flex-[1_1_0] text-center text-xl my-4">ToDoList</div>
         </Link>
-        <ul className="flex-[8_1_0] flex space-x-10">
-          <Link to="/">
-            <li>Home</li>
-          </Link>
-        </ul>
-        <ul className="flex-[1_1_0] flex space-x-10 px-10">
+        <div className="flex-[1_1_0] text-center ">
           {!user ? (
             <Link to="/Login">
-              <button>Login</button>
+              <button className="flex m-auto items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                  />
+                </svg>
+                &nbsp;LOGIN&nbsp;
+              </button>
             </Link>
           ) : (
             <>
-              <div>{user.username}</div>
-              <button onClick={logoutHandler}>Logout</button>
+              <button
+                onClick={logoutHandler}
+                className="flex m-auto items-center justify-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
+                &nbsp;LOGOUT&nbsp;
+              </button>
+              <div className="flex my-4 items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                {user.username}
+              </div>
             </>
           )}
-        </ul>
+        </div>
       </div>
     </div>
   );
 }
 
 export default NavBar;
-{
-  /* <header class="p-3 bg-dark text-white">
-<div class="container">
-  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-      <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
-    </a>
-
-    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-      <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-      <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-      <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-      <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-    </ul>
-
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-      <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-    </form>
-
-    <div class="text-end">
-      <button type="button" class="btn btn-outline-light me-2">Login</button>
-      <button type="button" class="btn btn-warning">Sign-up</button>
-    </div>
-  </div>
-</div>
-</header> */
-}

@@ -8,7 +8,7 @@ import rootReducer from './_reducers/index';
 import axios from 'axios';
 import { CookiesProvider } from 'react-cookie';
 import './index.css';
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://localhost:3001';
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(

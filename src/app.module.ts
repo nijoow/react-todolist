@@ -9,7 +9,6 @@ import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongoURI'),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
@@ -18,6 +17,7 @@ import * as Joi from '@hapi/joi';
         JWT_REFRESH_TOKEN_EXPIRATION_TIME: Joi.string().required(),
       }),
     }),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     AuthModule,
     UsersModule,
     MongooseModule,
